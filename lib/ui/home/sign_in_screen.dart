@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:task_managment_apk/ui/widget/custom_text_form_field.dart';
 import 'package:task_managment_apk/ui/widget/screen_background.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -21,22 +20,38 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 100,
+              const SizedBox(
+                height: 110,
               ),
               Text(
                 'Get Started With',
-                style:
-                    textTheme.displaySmall!.copyWith(fontWeight: FontWeight.bold),
+                style: textTheme.displaySmall!
+                    .copyWith(fontWeight: FontWeight.w500),
               ),
-              SizedBox(
-                height: 20,
+              const SizedBox(
+                height: 24,
               ),
-              CustomTextFormField(),
-              SizedBox(height: 16,),
-              CustomTextFormField(),
-              SizedBox(height: 16,),
-
+              TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  hintText: 'Email',
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              TextFormField(
+                obscureText: true,
+                decoration: const InputDecoration(
+                  hintText: 'Password',
+                ),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              ElevatedButton(
+                  onPressed: () {},
+                  child:  const Icon(Icons.arrow_circle_right_outlined))
             ],
           ),
         ),
@@ -44,5 +59,3 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 }
-
-
