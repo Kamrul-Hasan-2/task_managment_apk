@@ -1,17 +1,16 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:task_managment_apk/ui/home/sign_up_screen.dart';
 import 'package:task_managment_apk/ui/widget/app_color.dart';
 import 'package:task_managment_apk/ui/widget/screen_background.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
@@ -28,26 +27,21 @@ class _SignInScreenState extends State<SignInScreen> {
                   height: 60,
                 ),
                 Text(
-                  'Get Started With',
+                  'Join With Us',
                   style: textTheme.displaySmall!
                       .copyWith(fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(
                   height: 24,
                 ),
-                _buildSignInFormSection(),
+
+                _buildSignUpFormSection(),
                 const SizedBox(
                   height: 24,
                 ),
                 Center(
                   child: Column(
                     children: [
-                      TextButton(
-                        onPressed: _onTapForgotPasswordButton,
-                        child: const Text('Forgot Password?',style: TextStyle(
-                          color: Colors.grey
-                        ),),
-                      ),
                       _buildSignUpSection(),
                     ],
                   ),
@@ -67,26 +61,53 @@ class _SignInScreenState extends State<SignInScreen> {
       text:  TextSpan(
         style: const TextStyle(
             color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
-        text: "Don't have an account? ",
+        text: "Have account? ",
         children: [
           TextSpan(
-            text: 'Sign Up',
-            style: const TextStyle(color: AppColor.themeColor),
-            recognizer: TapGestureRecognizer()..onTap = _onTapSignUpButton
+              text: 'Sign In',
+              style: const TextStyle(color: AppColor.themeColor),
+              recognizer: TapGestureRecognizer()..onTap = _onTapSignInButton
           ),
         ],
       ),
     );
   }
 
-  Widget _buildSignInFormSection() {
+  Widget _buildSignUpFormSection() {
     return Column(
       children: [
-
         TextFormField(
           keyboardType: TextInputType.emailAddress,
           decoration: const InputDecoration(
             hintText: 'Email',
+          ),
+        ),
+
+        const SizedBox(
+          height: 8,
+        ),
+        TextFormField(
+          decoration: const InputDecoration(
+            hintText: 'First Name',
+          ),
+        ),
+
+        const SizedBox(
+          height: 8,
+        ),
+        TextFormField(
+          decoration: const InputDecoration(
+            hintText: 'Last Name',
+          ),
+        ),
+
+        const SizedBox(
+          height: 8,
+        ),
+        TextFormField(
+          keyboardType: TextInputType.phone,
+          decoration: const InputDecoration(
+            hintText: 'Mobile',
           ),
         ),
         const SizedBox(
@@ -109,17 +130,12 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  void _onTapForgotPasswordButton(){
-    //TODO: implement forgot password
-  }
-
-
   void _onTapNextScreenButton() {
     //TODO: implement next Screen Button
   }
 
-  void _onTapSignUpButton(){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen(),));
+  void _onTapSignInButton(){
+      Navigator.pop(context);
   }
 
 
