@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:task_managment_apk/ui/home/forgot_password_email_screen.dart';
 import 'package:task_managment_apk/ui/home/sign_up_screen.dart';
 import 'package:task_managment_apk/ui/widget/app_color.dart';
 import 'package:task_managment_apk/ui/widget/screen_background.dart';
@@ -44,9 +45,10 @@ class _SignInScreenState extends State<SignInScreen> {
                     children: [
                       TextButton(
                         onPressed: _onTapForgotPasswordButton,
-                        child: const Text('Forgot Password?',style: TextStyle(
-                          color: Colors.grey
-                        ),),
+                        child: const Text(
+                          'Forgot Password?',
+                          style: TextStyle(color: Colors.grey),
+                        ),
                       ),
                       _buildSignUpSection(),
                     ],
@@ -60,20 +62,17 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-
-
   Widget _buildSignUpSection() {
     return RichText(
-      text:  TextSpan(
+      text: TextSpan(
         style: const TextStyle(
             color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
         text: "Don't have an account? ",
         children: [
           TextSpan(
-            text: 'Sign Up',
-            style: const TextStyle(color: AppColor.themeColor),
-            recognizer: TapGestureRecognizer()..onTap = _onTapSignUpButton
-          ),
+              text: 'Sign Up',
+              style: const TextStyle(color: AppColor.themeColor),
+              recognizer: TapGestureRecognizer()..onTap = _onTapSignUpButton),
         ],
       ),
     );
@@ -82,7 +81,6 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget _buildSignInFormSection() {
     return Column(
       children: [
-
         TextFormField(
           keyboardType: TextInputType.emailAddress,
           decoration: const InputDecoration(
@@ -109,19 +107,23 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  void _onTapForgotPasswordButton(){
-    //TODO: implement forgot password
+  void _onTapForgotPasswordButton() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ForgotPasswordEmailScreen(),
+        ));
   }
-
 
   void _onTapNextScreenButton() {
     //TODO: implement next Screen Button
   }
 
-  void _onTapSignUpButton(){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen(),));
+  void _onTapSignUpButton() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SignUpScreen(),
+        ));
   }
-
-
-
 }

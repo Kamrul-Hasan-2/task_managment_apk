@@ -114,7 +114,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           height: 8,
         ),
         TextFormField(
-          obscureText: true,
           decoration: const InputDecoration(
             hintText: 'Password',
           ),
