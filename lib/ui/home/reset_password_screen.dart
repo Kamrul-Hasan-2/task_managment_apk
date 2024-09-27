@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:task_managment_apk/ui/home/forgot_password_otp_screen.dart';
 import 'package:task_managment_apk/ui/home/sign_in_screen.dart';
 import 'package:task_managment_apk/ui/widget/app_color.dart';
 import 'package:task_managment_apk/ui/widget/screen_background.dart';
