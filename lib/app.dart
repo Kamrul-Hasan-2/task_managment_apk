@@ -14,6 +14,7 @@ class _TaskManagerState extends State<TaskManager> {
   Widget build(BuildContext context) {
     return  MaterialApp(
       theme: ThemeData(
+        colorSchemeSeed: AppColor.themeColor,
         textTheme:  const TextTheme(),
         inputDecorationTheme: _inputDecorationTheme(),
         elevatedButtonTheme: _elevatedButtonThemeData()
