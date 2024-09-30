@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:task_managment_apk/ui/home/forgot_password_email_screen.dart';
+import 'package:task_managment_apk/ui/home/main_bottom_nav_bar_screen.dart';
 import 'package:task_managment_apk/ui/home/sign_up_screen.dart';
 import 'package:task_managment_apk/ui/widget/app_color.dart';
 import 'package:task_managment_apk/ui/widget/screen_background.dart';
@@ -15,7 +16,9 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
+    TextTheme textTheme = Theme
+        .of(context)
+        .textTheme;
 
     return Scaffold(
       body: ScreenBackground(
@@ -72,7 +75,8 @@ class _SignInScreenState extends State<SignInScreen> {
           TextSpan(
               text: 'Sign Up',
               style: const TextStyle(color: AppColor.themeColor),
-              recognizer: TapGestureRecognizer()..onTap = _onTapSignUpButton),
+              recognizer: TapGestureRecognizer()
+                ..onTap = _onTapSignUpButton),
         ],
       ),
     );
@@ -111,12 +115,15 @@ class _SignInScreenState extends State<SignInScreen> {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ForgotPasswordEmailScreen(),
+          builder: (context) => const ForgotPasswordEmailScreen(),
         ));
   }
 
   void _onTapNextScreenButton() {
-    //TODO: implement next Screen Button
+    Navigator.pushAndRemoveUntil(context,
+      MaterialPageRoute(builder: (context) => const MainBottomNavBarScreen()), (
+          value) => false,
+    );
   }
 
   void _onTapSignUpButton() {
