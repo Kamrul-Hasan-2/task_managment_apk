@@ -44,7 +44,8 @@ class TMAppBar extends StatelessWidget implements PreferredSizeWidget {
                   MaterialPageRoute(
                     builder: (context) => const SignInScreen(),
                   ),
-                  (predicate) => false);
+                  (predicate) => false,
+              );
             },
             icon: const Icon(Icons.logout),
           ),
