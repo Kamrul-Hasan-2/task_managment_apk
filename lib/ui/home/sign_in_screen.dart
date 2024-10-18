@@ -172,7 +172,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
     Map<String, dynamic> requestBody ={
       "email":_emailTEController.text.trim(),
-      "password":_emailTEController.text
+      "password":_passwordTEController.text
     };
 
     NetworkResponse response = await NetworkCaller.postRequest(
