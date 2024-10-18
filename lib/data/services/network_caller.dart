@@ -51,11 +51,11 @@ class NetworkCaller {
       if (response.statusCode == 200) {
         final jsonData = jsonDecode(response.body);
 
-        if(jsonData['status'] == 'false'){
+        if(jsonData['status'] == 'fail'){
           return NetworkResponse(
               isSuccess: false,
               statusCode: response.statusCode,
-              errorMessage: jsonData['data']
+              errorMessage: jsonData['data'],
           );
         }
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:task_managment_apk/data/model/network_response.dart';
 import 'package:task_managment_apk/data/services/network_caller.dart';
 import 'package:task_managment_apk/data/utils/urls.dart';
+import 'package:task_managment_apk/ui/controller/auth_controller.dart';
 import 'package:task_managment_apk/ui/home/forgot_password_email_screen.dart';
 import 'package:task_managment_apk/ui/home/main_bottom_nav_bar_screen.dart';
 import 'package:task_managment_apk/ui/home/sign_up_screen.dart';
@@ -24,12 +25,9 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _passwordTEController = TextEditingController();
   bool _inProgress = false;
 
-
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme
-        .of(context)
-        .textTheme;
+    TextTheme textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       body: ScreenBackground(
@@ -76,8 +74,6 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-
-
   Widget _buildSignInFormSection() {
     return Form(
       key: _formKey,
@@ -90,8 +86,8 @@ class _SignInScreenState extends State<SignInScreen> {
             decoration: const InputDecoration(
               hintText: 'Email',
             ),
-            validator: (String? value){
-              if(value!.isEmpty == true){
+            validator: (String? value) {
+              if (value!.isEmpty == true) {
                 return 'Enter a valid Email';
               }
               return null;
@@ -107,11 +103,11 @@ class _SignInScreenState extends State<SignInScreen> {
             decoration: const InputDecoration(
               hintText: 'Password',
             ),
-            validator: (String? value){
-              if(value!.isEmpty == true){
+            validator: (String? value) {
+              if (value!.isEmpty == true) {
                 return 'Enter 6 digit password';
               }
-              if (value.length <= 6 ) {
+              if (value.length <= 6) {
                 return 'Password must be at least 6 characters';
               }
               return null;
@@ -143,8 +139,7 @@ class _SignInScreenState extends State<SignInScreen> {
           TextSpan(
               text: 'Sign Up',
               style: const TextStyle(color: AppColor.themeColor),
-              recognizer: TapGestureRecognizer()
-                ..onTap = _onTapSignUpButton),
+              recognizer: TapGestureRecognizer()..onTap = _onTapSignUpButton),
         ],
       ),
     );
@@ -159,37 +154,38 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void _onTapNextScreenButton() {
-    if(_formKey.currentState!.validate()){
+    if (_formKey.currentState!.validate()) {
       _signIn();
     }
-
-
   }
 
-  Future<void> _signIn () async{
+  Future<void> _signIn() async {
     _inProgress = true;
     setState(() {});
 
-    Map<String, dynamic> requestBody ={
-      "email":_emailTEController.text.trim(),
-      "password":_passwordTEController.text
+    Map<String, dynamic> requestBody = {
+      "email": _emailTEController.text.trim(),
+      "password": _passwordTEController.text
     };
 
     NetworkResponse response = await NetworkCaller.postRequest(
-        url: Urls.logIn,
+      url: Urls.logIn,
       body: requestBody,
     );
     _inProgress = false;
     setState(() {});
-    if(response.isSuccess){
-      Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => const MainBottomNavBarScreen()), (
-            value) => false,
+    if (response.isSuccess) {
+      await AuthController.saveAccessToken(response.responseData['token']);
+      
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const MainBottomNavBarScreen()),
+        (value) => false,
       );
-    }else{
+      snackBarMessage(context, 'Login Successful');
+    } else {
       snackBarMessage(context, response.errorMessage, true);
     }
-
   }
 
   void _onTapSignUpButton() {
