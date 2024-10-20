@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:task_managment_apk/data/model/network_response.dart';
+import 'package:task_managment_apk/ui/controller/auth_controller.dart';
 
 class NetworkCaller {
   static Future<NetworkResponse> getRequest(String url) async {
@@ -42,6 +43,7 @@ class NetworkCaller {
         uri,
         headers: {
           'Content-Type': 'application/json',
+          'token' : AuthController.accessToken.toString()
         },
         body: jsonEncode(body),
       );

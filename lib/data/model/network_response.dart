@@ -8,7 +8,7 @@ class NetworkResponse {
     required this.isSuccess,
     required this.statusCode,
     this.responseData,
-     this.errorMessage = 'No User Found. Try Again!!',
+     this.errorMessage = 'Something went Wrong. Try Again',
   });
 
 }
