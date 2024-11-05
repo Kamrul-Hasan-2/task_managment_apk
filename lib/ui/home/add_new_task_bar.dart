@@ -18,6 +18,7 @@ class _AddNewTaskBarState extends State<AddNewTaskBar> {
       TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _addNewTaskInProgress = false;
+  bool _shouldRefressPrevious = false;
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +110,7 @@ class _AddNewTaskBarState extends State<AddNewTaskBar> {
     setState(() {});
 
     if (response.isSuccess) {
+      _shouldRefressPrevious = true;
       _clearTextField();
       snackBarMessage(context, 'New Task Add!');
     } else {

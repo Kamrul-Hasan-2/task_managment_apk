@@ -3,6 +3,8 @@ import 'package:task_managment_apk/ui/home/splash_screen.dart';
 import 'package:task_managment_apk/ui/widget/app_color.dart';
 
 class TaskManager extends StatefulWidget {
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
   const TaskManager({super.key});
 
   @override
@@ -10,9 +12,13 @@ class TaskManager extends StatefulWidget {
 }
 
 class _TaskManagerState extends State<TaskManager> {
+
+//  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
+      navigatorKey: TaskManager.navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorSchemeSeed: AppColor.themeColor,
