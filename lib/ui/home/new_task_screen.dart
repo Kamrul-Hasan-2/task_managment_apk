@@ -5,6 +5,7 @@ import 'package:task_managment_apk/data/model/task_model.dart';
 import 'package:task_managment_apk/data/services/network_caller.dart';
 import 'package:task_managment_apk/data/utils/urls.dart';
 import 'package:task_managment_apk/ui/home/add_new_task_bar.dart';
+import 'package:task_managment_apk/ui/widget/centre_circular_progress_indicator.dart';
 import 'package:task_managment_apk/ui/widget/snack_bar_message.dart';
 import 'package:task_managment_apk/ui/widget/task_card.dart';
 import 'package:task_managment_apk/ui/widget/task_summery_card.dart';
@@ -29,29 +30,34 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          _buildSummarSection(),
-          Expanded(
-            child: Visibility(
-              visible: !_getNewTaskListInProgress,
-              replacement: const CircularProgressIndicator(),
-              child: ListView.separated(
-                itemCount: _newTaskList.length,
-                itemBuilder: (context, index) {
-                  return  TaskCard(
-                     taskModel: _newTaskList[index],
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(
-                    height: 4,
-                  );
-                },
+      body: RefreshIndicator(
+        onRefresh: ()async{
+          _getNewTaskList();
+        },
+        child: Column(
+          children: [
+            _buildSummarSection(),
+            Expanded(
+              child: Visibility(
+                visible: !_getNewTaskListInProgress,
+                replacement: const CentreCircularProgressIndicator(),
+                child: ListView.separated(
+                  itemCount: _newTaskList.length,
+                  itemBuilder: (context, index) {
+                    return  TaskCard(
+                       taskModel: _newTaskList[index],
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(
+                      height: 4,
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _onTapFAB,
@@ -85,6 +91,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       ),
     );
   }
+
 
   Future<void> _onTapFAB() async {
     final bool? shouldRefresh = await Navigator.push(context,
