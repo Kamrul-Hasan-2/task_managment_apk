@@ -1,8 +1,13 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:task_managment_apk/data/model/network_response.dart';
+import 'package:task_managment_apk/data/services/network_caller.dart';
+import 'package:task_managment_apk/data/utils/urls.dart';
 import 'package:task_managment_apk/ui/controller/auth_controller.dart';
+import 'package:task_managment_apk/ui/widget/snack_bar_message.dart';
 import 'package:task_managment_apk/ui/widget/tm_app_bar.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -19,6 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _phoneNumberTEController = TextEditingController();
   final TextEditingController _passwordTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _updateProfileInProgress = false;
 
   XFile? _selectedImage;
 
@@ -67,39 +73,67 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: 8,
                 ),
                 TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: _emailTEController,
                   enabled: false,
                   decoration: const InputDecoration(
                       hintText: 'Email'
                   ),
+                  validator: (String? value){
+                    if(value?.isEmpty == true){
+                      return 'Enter a valid email';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 8,
                 ),
                 TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: _firstNameTEController,
                   decoration: const InputDecoration(
                       hintText: 'First Name'
                   ),
+                  validator: (String? value){
+                    if(value?.isEmpty == true){
+                      return 'Enter a First Name';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 8,
                 ),
 
                 TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: _lastNameTEController,
                   decoration: const InputDecoration(
                       hintText: 'Last Name'
                   ),
+                  validator: (String? value){
+                    if(value?.isEmpty == true){
+                      return 'Enter a Last name';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 8,
                 ),
                 TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: _phoneNumberTEController,
                   decoration: const InputDecoration(
                       hintText: 'Phone Number'
                   ),
+                  validator: (String? value){
+                    if(value?.isEmpty == true){
+                      return 'Enter a valid Phone number';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 8,
@@ -155,7 +189,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),),
             ),
             const SizedBox(width: 8,),
-            const Text('Selected Photo', style: TextStyle(
+             Text(_getSelectedPhotoTitle(), style: const TextStyle(
               color: Colors.grey,
               fontWeight: FontWeight.bold
             ),)
@@ -164,6 +198,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+  
+  Future<void> _updateProfile() async{
+    _updateProfileInProgress = true;
+    setState(() {});
+
+    Map<String, dynamic> requestBody = {
+      "email": _emailTEController.text,
+      "firstName": _firstNameTEController.text,
+      "lastName": _lastNameTEController.text,
+      "mobile": _phoneNumberTEController.text,
+    };
+
+    if(_passwordTEController.text.isNotEmpty){
+      requestBody['password'] = _passwordTEController.text;
+    }
+    if(_selectedImage != null){
+      List<int> imageBytes = await _selectedImage!.readAsBytes();
+      String convertedImage = base64Encode(imageBytes);
+      requestBody['photo'] = convertedImage;
+    }
+
+    final NetworkResponse response = await NetworkCaller.postRequest(
+      url: Urls.profileUpdate,
+      body: requestBody,
+    );
+    if(response.isSuccess){
+      // AuthController.saveUserData(userModel);
+      snackBarMessage(context, 'Profile has been Update');
+    }else{
+      snackBarMessage(context, response.errorMessage, true);
+    }
+    
+  }
+
+  String _getSelectedPhotoTitle(){
+    if(_selectedImage != null){
+      return _selectedImage!.name;
+    }
+    return 'Selected Photo';
+  }
+
 
   Future<void> _pickImage() async {
     ImagePicker imagePicker = ImagePicker();

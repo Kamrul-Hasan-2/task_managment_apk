@@ -8,6 +8,7 @@ class Urls{
   static const String getCanceledTaskList = '$_baseUrl/listTaskByStatus/Canceled';
   static const String getProgressTaskList = '$_baseUrl/listTaskByStatus/Progress';
   static const String taskStatusCount = '$_baseUrl/taskStatusCount';
+  static const String profileUpdate = '$_baseUrl/ProfileUpdate';
 
   static String changedStatus (String taskId, String status){
     return '$_baseUrl/updateTaskStatus/$taskId/$status' ;
