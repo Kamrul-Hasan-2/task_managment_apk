@@ -4,6 +4,19 @@ class Urls{
   static const String logIn = '$_baseUrl/Login';
   static const String addNewTask = '$_baseUrl/createTask';
   static const String getNewTaskList = '$_baseUrl/listTaskByStatus/New';
+  static const String getCompletedTaskList = '$_baseUrl/listTaskByStatus/Completed';
+  static const String getCanceledTaskList = '$_baseUrl/listTaskByStatus/Canceled';
+  static const String getProgressTaskList = '$_baseUrl/listTaskByStatus/Progress';
+  static const String taskStatusCount = '$_baseUrl/taskStatusCount';
+
+  static String changedStatus (String taskId, String status){
+    return '$_baseUrl/updateTaskStatus/$taskId/$status' ;
+  }
+
+  static String deleteStatus (String taskId){
+    return '$_baseUrl/deleteTask/$taskId' ;
+  }
+
   static String getEmailVerify(String email) {
     return '$_baseUrl/RecoverVerifyEmail/$email';
   }
