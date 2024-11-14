@@ -9,8 +9,6 @@ class CounterHome extends StatefulWidget {
 }
 
 class _CounterHomeState extends State<CounterHome> {
-  CounterController counterController = CounterController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,19 +16,19 @@ class _CounterHomeState extends State<CounterHome> {
         title: const Text('GetX Counter App'),
       ),
       body: Center(
-          child: GetBuilder<CounterController>(
-              init: counterController,
-              builder: (counterController) {
-                return Text(
-                  '${counterController.counter}',
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                  ),
-                );
-              })),
+          child: GetBuilder<CounterController>(builder: (counterController) {
+        return Text(
+          '${counterController.counter}',
+          style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
+          ),
+        );
+      })),
       floatingActionButton: FloatingActionButton(
-        onPressed: counterController.increment,
+        onPressed: () {
+          Get.find<CounterController>().increment();
+        },
         child: const Icon(Icons.add),
       ),
     );
