@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:task_managment_apk/data/model/network_response.dart';
-import 'package:task_managment_apk/data/model/task_list_model.dart';
-import 'package:task_managment_apk/data/model/task_model.dart';
-import 'package:task_managment_apk/data/model/task_status_count_model.dart';
 import 'package:task_managment_apk/data/model/task_status_model.dart';
-import 'package:task_managment_apk/data/services/network_caller.dart';
-import 'package:task_managment_apk/data/utils/urls.dart';
 import 'package:task_managment_apk/ui/controller/new_task_list_controller.dart';
 import 'package:task_managment_apk/ui/controller/task_status_list_controller.dart';
 import 'package:task_managment_apk/ui/home/add_new_task_bar.dart';
@@ -23,8 +17,10 @@ class NewTaskScreen extends StatefulWidget {
 }
 
 class _NewTaskScreenState extends State<NewTaskScreen> {
-final TaskStatusListController _taskStatusListController = Get.find<TaskStatusListController>();
-  final NewTaskListController _newTaskListController = Get.find<NewTaskListController>();
+  final TaskStatusListController _taskStatusListController =
+      Get.find<TaskStatusListController>();
+  final NewTaskListController _newTaskListController =
+      Get.find<NewTaskListController>();
 
   @override
   void initState() {
@@ -45,28 +41,26 @@ final TaskStatusListController _taskStatusListController = Get.find<TaskStatusLi
           children: [
             _buildSummarSection(),
             Expanded(
-              child: GetBuilder<NewTaskListController>(
-                builder: (controller) {
-                  return Visibility(
-                    visible: !controller.inProgress,
-                    replacement: const CentreCircularProgressIndicator(),
-                    child: ListView.separated(
-                      itemCount: controller.taskList.length,
-                      itemBuilder: (context, index) {
-                        return TaskCard(
-                          taskModel: controller.taskList[index],
-                          onRefreshList: _getNewTaskList,
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(
-                          height: 4,
-                        );
-                      },
-                    ),
-                  );
-                }
-              ),
+              child: GetBuilder<NewTaskListController>(builder: (controller) {
+                return Visibility(
+                  visible: !controller.inProgress,
+                  replacement: const CentreCircularProgressIndicator(),
+                  child: ListView.separated(
+                    itemCount: controller.taskList.length,
+                    itemBuilder: (context, index) {
+                      return TaskCard(
+                        taskModel: controller.taskList[index],
+                        onRefreshList: _getNewTaskList,
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(
+                        height: 4,
+                      );
+                    },
+                  ),
+                );
+              }),
             ),
           ],
         ),
@@ -79,26 +73,25 @@ final TaskStatusListController _taskStatusListController = Get.find<TaskStatusLi
   }
 
   Widget _buildSummarSection() {
-    return GetBuilder<TaskStatusListController>(
-      builder: (controller) {
-        return Visibility(
-          visible: !controller.inProgress,
-          replacement: const CentreCircularProgressIndicator(),
-          child:  SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: _getTaskSummaryCardList(),
-            ),
+    return GetBuilder<TaskStatusListController>(builder: (controller) {
+      return Visibility(
+        visible: !controller.inProgress,
+        replacement: const CentreCircularProgressIndicator(),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: _getTaskSummaryCardList(),
           ),
-        );
-      }
-    );
+        ),
+      );
+    });
   }
 
-  List<TaskSummeryCard> _getTaskSummaryCardList(){
+  List<TaskSummeryCard> _getTaskSummaryCardList() {
     List<TaskSummeryCard> taskSummaryCardList = [];
-    for(TaskStatusModel t in _taskStatusListController.taskStatusList){
-      taskSummaryCardList.add(TaskSummeryCard(title: t.sId!, count: t.sum ?? 0));
+    for (TaskStatusModel t in _taskStatusListController.taskStatusList) {
+      taskSummaryCardList
+          .add(TaskSummeryCard(title: t.sId!, count: t.sum ?? 0));
     }
     return taskSummaryCardList;
   }
@@ -121,7 +114,6 @@ final TaskStatusListController _taskStatusListController = Get.find<TaskStatusLi
   }
 
   Future<void> _getTaskStatusCount() async {
-
     final bool result = await _taskStatusListController.getTaskStatusCount();
 
     if (result == false) {

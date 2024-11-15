@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:task_managment_apk/data/model/network_response.dart';
-import 'package:task_managment_apk/data/model/task_list_model.dart';
-import 'package:task_managment_apk/data/model/task_model.dart';
-import 'package:task_managment_apk/data/services/network_caller.dart';
-import 'package:task_managment_apk/data/utils/urls.dart';
 import 'package:task_managment_apk/ui/controller/completed_task_controller.dart';
 import 'package:task_managment_apk/ui/widget/centre_circular_progress_indicator.dart';
 import 'package:task_managment_apk/ui/widget/snack_bar_message.dart';
