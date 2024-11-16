@@ -9,6 +9,9 @@ import 'package:task_managment_apk/ui/widget/screen_background.dart';
 import 'package:task_managment_apk/ui/widget/snack_bar_message.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
+
+  // final String name = '/resetPassword';
+
   const ResetPasswordScreen(
       {super.key, required this.userEmail, required this.otp});
 
@@ -164,10 +167,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   }
 
   void _onTapSignInButton() {
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const SignInScreen()),
-        (_) => false);
+    // Navigator.pushAndRemoveUntil(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => const SignInScreen()),
+    //     (_) => false);
+    Get.to(SignInScreen.name);
   }
 
   Future<void> _setNewPassword() async {

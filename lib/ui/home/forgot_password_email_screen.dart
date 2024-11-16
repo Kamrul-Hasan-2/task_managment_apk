@@ -8,6 +8,8 @@ import 'package:task_managment_apk/ui/widget/screen_background.dart';
 import 'package:task_managment_apk/ui/widget/snack_bar_message.dart';
 
 class ForgotPasswordEmailScreen extends StatefulWidget {
+  static const String name = '/forgotPasswordEmail';
+
   const ForgotPasswordEmailScreen({super.key});
 
   @override
@@ -128,6 +130,7 @@ class _ForgotPasswordEmailScreenState extends State<ForgotPasswordEmailScreen> {
   void _onTapNextScreenButton() {
     if (_formKey.currentState!.validate()) {
       _getVerifyEmail();
+
 
       Navigator.push(
           context,

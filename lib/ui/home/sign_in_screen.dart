@@ -11,6 +11,7 @@ import 'package:task_managment_apk/ui/widget/screen_background.dart';
 import 'package:task_managment_apk/ui/widget/snack_bar_message.dart';
 
 class SignInScreen extends StatefulWidget {
+  static const String name = '/signIn';
 
   const SignInScreen({super.key});
 
